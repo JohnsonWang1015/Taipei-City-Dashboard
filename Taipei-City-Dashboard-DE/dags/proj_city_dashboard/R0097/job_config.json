@@ -1,0 +1,37 @@
+{
+    "dag_infos": {
+        "dag_id": "R0097",
+        "start_date": "2026-04-04",
+        "schedule_interval": "0 */2 * * *",
+        "catchup": false,
+        "tags": ["swcb_debris_flow_warning", "水保署", "土石流警戒"],
+        "description": "Fetch debris flow warning status from SWCB API for New Taipei area.",
+        "default_args": {
+            "owner": "airflow",
+            "email": ["DEFAULT_EMAIL_LIST"],
+            "email_on_retry": false,
+            "email_on_failure": true,
+            "retries": 1,
+            "retry_delay": 60
+        },
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "swcb_debris_flow_warning",
+        "ready_data_history_table": "",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "replace"
+    },
+    "data_infos": {
+        "name_cn": "土石流警戒",
+        "airflow_update_freq": "every 2 hours",
+        "source": "https://246.swcb.gov.tw/Service/OpenData",
+        "source_type": "external API",
+        "source_dept": "農業部水土保持署",
+        "gis_format": "",
+        "output_coordinate": "",
+        "is_geometry": 0,
+        "dataset_description": "水土保持署土石流警戒資料，篩選新北市區域。",
+        "etl_description": "fetch SWCB debris flow warning API, filter to New Taipei county",
+        "sensitivity": "public"
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "dag_infos": {
+        "dag_id": "R0098",
+        "start_date": "2026-04-04",
+        "schedule_interval": "0 4 * * *",
+        "catchup": false,
+        "tags": ["ntpc_pump_station", "新北水利局", "新北抽水站"],
+        "description": "Fetch New Taipei pump station info from data.ntpc API.",
+        "default_args": {"owner": "airflow", "email": ["DEFAULT_EMAIL_LIST"], "email_on_retry": false, "email_on_failure": true, "retries": 1, "retry_delay": 60},
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "ntpc_pump_station",
+        "ready_data_history_table": "",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "replace"
+    },
+    "data_infos": {
+        "name_cn": "新北抽水站",
+        "airflow_update_freq": "04:00 every day",
+        "source": "https://data.ntpc.gov.tw/api/datasets/3cdc5b9c-ce48-4dd6-8079-b9b3fa4b7296/json",
+        "source_type": "external API",
+        "source_dept": "新北市水利局",
+        "gis_format": "",
+        "output_coordinate": "",
+        "is_geometry": 0,
+        "dataset_description": "新北市83座抽水站基本資料。",
+        "etl_description": "fetch data.ntpc pump station API with pagination",
+        "sensitivity": "public"
+    }
+}

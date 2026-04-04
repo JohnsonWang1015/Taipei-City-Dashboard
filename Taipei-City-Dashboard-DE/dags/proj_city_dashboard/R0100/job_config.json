@@ -1,0 +1,30 @@
+{
+    "dag_infos": {
+        "dag_id": "R0100",
+        "start_date": "2026-04-04",
+        "schedule_interval": "0 3 1 1 *",
+        "catchup": false,
+        "tags": ["taipei_historical_flood", "水利處", "歷史積水紀錄"],
+        "description": "Fetch Taipei historical flood records from data.taipei KML file.",
+        "default_args": {"owner": "airflow", "email": ["DEFAULT_EMAIL_LIST"], "email_on_retry": false, "email_on_failure": true, "retries": 1, "retry_delay": 60},
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "taipei_historical_flood",
+        "ready_data_history_table": "",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "replace"
+    },
+    "data_infos": {
+        "name_cn": "歷史積水紀錄",
+        "airflow_update_freq": "yearly on Jan 1",
+        "source": "https://data.taipei",
+        "source_type": "KML file",
+        "source_dept": "台北市工務局水利處",
+        "gis_format": "Point",
+        "output_coordinate": "EPSG:4326",
+        "is_geometry": 1,
+        "dataset_description": "台北市歷年積水事件紀錄KML。",
+        "etl_description": "download KML, parse with geopandas/fiona, extract flood event details",
+        "sensitivity": "public"
+    }
+}

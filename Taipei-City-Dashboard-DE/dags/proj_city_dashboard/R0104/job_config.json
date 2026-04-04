@@ -1,0 +1,30 @@
+{
+    "dag_infos": {
+        "dag_id": "R0104",
+        "start_date": "2026-04-04",
+        "schedule_interval": "0 4 * * *",
+        "catchup": false,
+        "tags": ["water_cctv_location", "水利處", "水利CCTV"],
+        "description": "Fetch water CCTV locations and stream URLs from Taipei and WRA sources.",
+        "default_args": {"owner": "airflow", "email": ["DEFAULT_EMAIL_LIST"], "email_on_retry": false, "email_on_failure": true, "retries": 1, "retry_delay": 60},
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "water_cctv_location",
+        "ready_data_history_table": "",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "replace"
+    },
+    "data_infos": {
+        "name_cn": "水利CCTV即時影像",
+        "airflow_update_freq": "04:00 every day",
+        "source": "data.taipei + data.gov.tw",
+        "source_type": "external API",
+        "source_dept": "台北市工務局水利處 / 經濟部水利署",
+        "gis_format": "Point",
+        "output_coordinate": "EPSG:4326",
+        "is_geometry": 1,
+        "dataset_description": "整合台北市與水利署水利CCTV即時影像位置資料。",
+        "etl_description": "fetch Taipei CCTV URLs + WRA CCTV locations, merge with coordinates",
+        "sensitivity": "public"
+    }
+}

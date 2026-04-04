@@ -1,0 +1,37 @@
+{
+    "dag_infos": {
+        "dag_id": "R0094",
+        "start_date": "2026-04-04",
+        "schedule_interval": "*/30 * * * *",
+        "catchup": false,
+        "tags": ["wra_reservoir_realtime", "水利署", "水庫即時水情"],
+        "description": "Fetch reservoir real-time data from WRA API for Feitsui and Shihmen reservoirs.",
+        "default_args": {
+            "owner": "airflow",
+            "email": ["DEFAULT_EMAIL_LIST"],
+            "email_on_retry": false,
+            "email_on_failure": true,
+            "retries": 1,
+            "retry_delay": 60
+        },
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "wra_reservoir_realtime",
+        "ready_data_history_table": "wra_reservoir_realtime_history",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "current+history"
+    },
+    "data_infos": {
+        "name_cn": "水庫即時水情",
+        "airflow_update_freq": "every 30 minutes",
+        "source": "https://fhy.wra.gov.tw/WraApi/v1/Reservoir/RealTimeInfo",
+        "source_type": "external API",
+        "source_dept": "經濟部水利署",
+        "gis_format": "Point",
+        "output_coordinate": "EPSG:4326",
+        "is_geometry": 1,
+        "dataset_description": "水利署水庫即時水情資料，包含蓄水率、水位、進出水量。",
+        "etl_description": "fetch WRA Reservoir API, filter Feitsui+Shihmen, transform to standard schema, save with geometry",
+        "sensitivity": "public"
+    }
+}

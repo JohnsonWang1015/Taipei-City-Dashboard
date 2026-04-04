@@ -1,0 +1,37 @@
+{
+    "dag_infos": {
+        "dag_id": "R0095",
+        "start_date": "2026-04-04",
+        "schedule_interval": "*/10 * * * *",
+        "catchup": false,
+        "tags": ["taipei_floodgate_status", "水利處", "疏散門即時狀態"],
+        "description": "Fetch Taipei floodgate real-time status from data.taipei API.",
+        "default_args": {
+            "owner": "airflow",
+            "email": ["DEFAULT_EMAIL_LIST"],
+            "email_on_retry": false,
+            "email_on_failure": true,
+            "retries": 1,
+            "retry_delay": 60
+        },
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "taipei_floodgate_status",
+        "ready_data_history_table": "taipei_floodgate_status_history",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "current+history"
+    },
+    "data_infos": {
+        "name_cn": "台北市疏散門即時狀態",
+        "airflow_update_freq": "every 10 minutes",
+        "source": "https://data.taipei/api/dataset/cc3f7e86-77ec-4bd3-a09f-05b175e192f5",
+        "source_type": "external API",
+        "source_dept": "台北市工務局水利處",
+        "gis_format": "",
+        "output_coordinate": "",
+        "is_geometry": 0,
+        "dataset_description": "台北市疏散門即時啟閉狀態，含各站閘門開啟/關閉數。",
+        "etl_description": "fetch data.taipei floodgate API, parse gate open/close counts per station",
+        "sensitivity": "public"
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "dag_infos": {
+        "dag_id": "R0090",
+        "start_date": "2026-04-04",
+        "schedule_interval": "*/10 * * * *",
+        "catchup": false,
+        "tags": ["wra_river_water_level", "水利署", "河川水位即時監測"],
+        "description": "Fetch river water level real-time data and warnings from WRA API for Taipei/New Taipei area.",
+        "default_args": {
+            "owner": "airflow",
+            "email": ["DEFAULT_EMAIL_LIST"],
+            "email_on_retry": false,
+            "email_on_failure": true,
+            "retries": 1,
+            "retry_delay": 60
+        },
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "wra_river_water_level",
+        "ready_data_history_table": "wra_river_water_level_history",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "current+history"
+    },
+    "data_infos": {
+        "name_cn": "河川水位即時監測",
+        "airflow_update_freq": "every 10 minutes",
+        "source": "https://fhy.wra.gov.tw/WraApi/v1/Water/RealTimeInfo",
+        "source_type": "external API",
+        "source_dept": "經濟部水利署",
+        "gis_format": "Point",
+        "output_coordinate": "EPSG:4326",
+        "is_geometry": 1,
+        "dataset_description": "水利署河川水位即時資料，含警戒門檻值與警戒等級計算。",
+        "etl_description": "fetch WRA Water API + Warning API, join thresholds, compute alert_level, filter to Taipei/New Taipei bounding box",
+        "sensitivity": "public"
+    }
+}

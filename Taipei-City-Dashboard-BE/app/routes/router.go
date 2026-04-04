@@ -113,6 +113,7 @@ func configureComponentRoutes() {
 		componentRoutes.GET("/:id/all", controllers.GetComponentByIDAll)
 		componentRoutes.GET("/:id/chart", controllers.GetComponentChartData)
 		componentRoutes.GET("/:id/history", controllers.GetComponentHistoryData)
+		componentRoutes.GET("/:id/geo", controllers.GetComponentGeoData)
 	}
 	componentRoutes.Use(middleware.IsSysAdm())
 	{

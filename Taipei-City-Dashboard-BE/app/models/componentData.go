@@ -130,6 +130,22 @@ func GetComponentChartDataQuery(id int, city string) (queryType string, queryStr
 	return chartDataQuery.QueryType, chartDataQuery.QueryChart, nil
 }
 
+// GetComponentMapConfigIDs retrieves the map_config_ids for a given component and city.
+func GetComponentMapConfigIDs(id int, city string) ([]int64, error) {
+	var qc QueryCharts
+	err := DBManager.
+		Table("components").
+		Select("query_charts.map_config_ids").
+		Joins("LEFT JOIN query_charts ON components.index = query_charts.index").
+		Where("components.id = ?", id).
+		Where("query_charts.city = ?", city).
+		First(&qc).Error
+	if err != nil {
+		return nil, err
+	}
+	return []int64(qc.MapConfigIDs), nil
+}
+
 func GetComponentHistoryDataQuery(id int, city string, timeFrom string, timeTo string) (queryHistory string, err error) {
 	var historyDataQuery HistoryDataQuery
 

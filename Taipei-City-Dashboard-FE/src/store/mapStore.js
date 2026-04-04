@@ -242,6 +242,10 @@ export const useMapStore = defineStore("map", {
 				"cctv",
 				"live",
 				"youbike_elec",
+				"pump",
+				"reservoir",
+				"floodgate",
+				"shelter",
 			];
 			images.forEach((element) => {
 				this.map.loadImage(
@@ -354,7 +358,7 @@ export const useMapStore = defineStore("map", {
 
 		/* Adding Map Layers */
 		// 1. Passes in the map_config (an Array of Objects) of a component and adds all layers to the map layer list
-		addToMapLayerList(map_config) {
+		addToMapLayerList(map_config, componentId) {
 			map_config.forEach((element) => {
 				let mapLayerId = `${element.index}-${element.type}-${element.city}`;
 				// 1-1. If the layer exists, simply turn on the visibility and add it to the visible layers list
@@ -374,6 +378,7 @@ export const useMapStore = defineStore("map", {
 				}
 				let appendLayer = { ...element };
 				appendLayer.layerId = mapLayerId;
+				if (componentId) appendLayer.componentId = componentId;
 				// 1-2. If the layer doesn't exist, call an API to get the layer data
 				this.loadingLayers.push(appendLayer.layerId);
 				if (element.source === "geojson") {
@@ -383,8 +388,31 @@ export const useMapStore = defineStore("map", {
 				}
 			});
 		},
-		// 2. Call an API to get the layer data
+		// 2. Call an API to get the layer data (try API first, fallback to static file)
 		fetchLocalGeoJson(map_config) {
+			const { componentId } = map_config;
+			const city = map_config.city || "taipei";
+			if (componentId) {
+				axios
+					.get(`/api/v1/component/${componentId}/geo`, {
+						params: { city },
+					})
+					.then((rs) => {
+						if (rs.data && rs.data.features && rs.data.features.length > 0) {
+							this.addGeojsonSource(map_config, rs.data);
+						} else {
+							this.fetchStaticGeoJson(map_config);
+						}
+					})
+					.catch(() => {
+						this.fetchStaticGeoJson(map_config);
+					});
+			} else {
+				this.fetchStaticGeoJson(map_config);
+			}
+		},
+		// 2-1. Fallback: load static GeoJSON file
+		fetchStaticGeoJson(map_config) {
 			axios
 				.get(`/mapData/${map_config.index}.geojson`)
 				.then((rs) => {
@@ -728,15 +756,15 @@ export const useMapStore = defineStore("map", {
 			const layers = Object.keys(this.deckGlLayer).map((index) => {
 				const l = this.deckGlLayer[index];
 				switch (l.type) {
-					case "ArcLayer":
-						return new ArcLayer(l.config);
-					case "AnimatedArcLayer":
-						return new AnimatedArcLayer({
-							...l.config,
-							coef: this.step / 1000,
-						});
-					default:
-						break;
+				case "ArcLayer":
+					return new ArcLayer(l.config);
+				case "AnimatedArcLayer":
+					return new AnimatedArcLayer({
+						...l.config,
+						coef: this.step / 1000,
+					});
+				default:
+					break;
 				}
 			});
 			this.overlay.setProps({

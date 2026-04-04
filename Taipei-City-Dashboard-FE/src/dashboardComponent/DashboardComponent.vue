@@ -105,7 +105,7 @@ const activeCity = computed({
 const toggleOn = computed({
 	get: () => props.toggleOn,
 	set: (value) => {
-		emits("toggle", value, props.config.map_config);
+		emits("toggle", value, props.config.map_config, props.config.id);
 	},
 });
 

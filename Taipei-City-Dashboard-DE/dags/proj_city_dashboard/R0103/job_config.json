@@ -1,0 +1,30 @@
+{
+    "dag_infos": {
+        "dag_id": "R0103",
+        "start_date": "2026-04-04",
+        "schedule_interval": "0 3 1 * *",
+        "catchup": false,
+        "tags": ["evacuation_shelter", "消防署", "避難收容處所"],
+        "description": "Fetch evacuation shelter data from national, Taipei, and New Taipei sources.",
+        "default_args": {"owner": "airflow", "email": ["DEFAULT_EMAIL_LIST"], "email_on_retry": false, "email_on_failure": true, "retries": 1, "retry_delay": 60},
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "evacuation_shelter",
+        "ready_data_history_table": "",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "replace"
+    },
+    "data_infos": {
+        "name_cn": "避難收容處所",
+        "airflow_update_freq": "03:00 on 1st of each month",
+        "source": "data.gov.tw + data.taipei + data.ntpc",
+        "source_type": "external API",
+        "source_dept": "內政部消防署 / 台北市 / 新北市",
+        "gis_format": "Point",
+        "output_coordinate": "EPSG:4326",
+        "is_geometry": 1,
+        "dataset_description": "整合三級政府避難收容處所資料。",
+        "etl_description": "fetch from 3 sources, standardize schema, merge, add geometry",
+        "sensitivity": "public"
+    }
+}

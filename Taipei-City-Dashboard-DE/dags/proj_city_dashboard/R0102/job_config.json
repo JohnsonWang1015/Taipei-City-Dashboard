@@ -1,0 +1,30 @@
+{
+    "dag_infos": {
+        "dag_id": "R0102",
+        "start_date": "2026-04-04",
+        "schedule_interval": "0 4 1 * *",
+        "catchup": false,
+        "tags": ["wra_flood_events", "水利署", "防災事件紀錄"],
+        "description": "Fetch flood disaster events from WRA API, iterating from 2015 to current year.",
+        "default_args": {"owner": "airflow", "email": ["DEFAULT_EMAIL_LIST"], "email_on_retry": false, "email_on_failure": true, "retries": 1, "retry_delay": 60},
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "wra_flood_events",
+        "ready_data_history_table": "",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "replace"
+    },
+    "data_infos": {
+        "name_cn": "防災事件紀錄",
+        "airflow_update_freq": "04:00 on 1st of each month",
+        "source": "https://fhy.wra.gov.tw/WraApi/v1/Event/Year",
+        "source_type": "external API",
+        "source_dept": "經濟部水利署",
+        "gis_format": "",
+        "output_coordinate": "",
+        "is_geometry": 0,
+        "dataset_description": "水利署歷年防災事件紀錄。",
+        "etl_description": "iterate years 2015-current, fetch WRA Event API per year, concatenate results",
+        "sensitivity": "public"
+    }
+}

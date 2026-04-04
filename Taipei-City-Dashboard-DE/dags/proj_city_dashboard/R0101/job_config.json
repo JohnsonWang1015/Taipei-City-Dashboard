@@ -1,0 +1,30 @@
+{
+    "dag_infos": {
+        "dag_id": "R0101",
+        "start_date": "2026-04-04",
+        "schedule_interval": "0 3 1 1 *",
+        "catchup": false,
+        "tags": ["flood_prone_area", "水利處", "易積水地區"],
+        "description": "Fetch flood-prone area data from Taipei KML and New Taipei open data.",
+        "default_args": {"owner": "airflow", "email": ["DEFAULT_EMAIL_LIST"], "email_on_retry": false, "email_on_failure": true, "retries": 1, "retry_delay": 60},
+        "ready_data_db": "postgres_default",
+        "ready_data_default_table": "flood_prone_area",
+        "ready_data_history_table": "",
+        "raw_data_db": "postgres_default",
+        "raw_data_table": "",
+        "load_behavior": "replace"
+    },
+    "data_infos": {
+        "name_cn": "易積水地區",
+        "airflow_update_freq": "yearly on Jan 1",
+        "source": "data.taipei + data.ntpc",
+        "source_type": "KML + API",
+        "source_dept": "台北市工務局水利處 / 新北市水利局",
+        "gis_format": "Polygon",
+        "output_coordinate": "EPSG:4326",
+        "is_geometry": 1,
+        "dataset_description": "台北市易積水地區KML + 新北市十大低漥地區。",
+        "etl_description": "download Taipei KML + fetch NTPC low-lying areas, merge, save with geometry",
+        "sensitivity": "public"
+    }
+}

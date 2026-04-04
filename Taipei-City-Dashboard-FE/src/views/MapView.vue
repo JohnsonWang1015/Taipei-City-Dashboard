@@ -77,7 +77,7 @@ function handleOpenSettings() {
 }
 
 // Open and closes the component as well as communicates to the mapStore to turn on and off map layers
-function handleToggle(value, map_config) {
+function handleToggle(value, map_config, componentId) {
 	if (!map_config[0]) {
 		if (value) {
 			dialogStore.showNotification(
@@ -88,7 +88,7 @@ function handleToggle(value, map_config) {
 		return;
 	}
 	if (value) {
-		mapStore.addToMapLayerList(map_config);
+		mapStore.addToMapLayerList(map_config, componentId);
 	} else {
 		mapStore.clearByParamFilter(map_config);
 		mapStore.turnOffMapLayerVisibility(map_config);
